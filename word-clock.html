@@ -1,0 +1,209 @@
+<html>
+	<head>
+		<!-- 
+Copyright (c) 2014, Mark J. Pascual (mark.pascual@gmail.com)
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer. 
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+The views and conclusions contained in the software and documentation are those
+of the authors and should not be interpreted as representing official policies, 
+either expressed or implied, of the FreeBSD Project.
+		-->
+		<title>Visual Word Clock</title>
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+		<style type="text/css">
+			body {
+				font-family: "Open Sans", sans-serif;
+				text-transform: uppercase;
+			}
+			#main {
+				width: 450px;
+				margin: 20px auto;
+				text-align: justify;
+				border: 1px solid #cdcdcd;
+			}
+			#title {
+				font-size: 3em;
+				text-align: center;
+			}
+			#clock {
+				width: 400px;
+				padding: 25px;
+			}
+			#clock:after {
+				/* Hack to fix last-word justify */
+				content: "";
+				display: inline-block;
+				width: 100%;
+			}
+			span {
+				font-size: 2.7em;
+				color: #eeeeee;
+			}
+			.active {
+				color: black;
+			}
+		</style>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				setTime();
+				setInterval(setTime, 60000);
+			});
+			function setTime() {
+				var now = new Date();
+				var hour = now.getHours();
+				var minute = now.getMinutes();
+				
+				console.log("Hour ["+hour+"], Minute ["+minute+"]");
+					
+				clearAll();
+					
+				// This is always used
+				$("#it_is").addClass("active");
+					
+				// Set the minute modifier
+				if ((minute >= 5) && (minute <= 9)) {
+					$("#five_modifier").addClass("active");
+					$("#minutes_modifier").addClass("active");
+				}
+				else if ((minute >= 10) && (minute <= 14)){
+					$("#ten_modifier").addClass("active");
+					$("#minutes_modifier").addClass("active");
+				}
+				else if ((minute >= 15) && (minute <= 19)){
+					$("#quarter_modifier").addClass("active");
+				}
+				else if ((minute >= 20) && (minute <= 29)){
+					$("#twenty_modifier").addClass("active");
+					$("#minutes_modifier").addClass("active");
+				}
+				else if ((minute >= 30) && (minute <= 39)){
+					$("#half_modifier").addClass("active");
+				}
+				else if ((minute >= 40) && (minute <= 44)){
+					$("#twenty_modifier").addClass("active");
+					$("#minutes_modifier").addClass("active");
+				}
+				else if ((minute >= 45) && (minute <= 49)){
+					$("#quarter_modifier").addClass("active");
+				}
+				else if ((minute >= 50) && (minute <= 54)){
+					$("#ten_modifier").addClass("active");
+					$("#minutes_modifier").addClass("active");
+				}
+				else if ((minute >= 55) && (minute <= 59)){
+					$("#five_modifier").addClass("active");
+					$("#minutes_modifier").addClass("active");
+				}
+					
+				// Set the to/past/oclock modifier, and modifications for the hour
+				if ((minute >= 5) && (minute <= 39)) {
+					$("#past_modifier").addClass("active");
+				} 
+				else if ((minute >= 40) && (minute <= 59)) {
+					$("#to_modifier").addClass("active");
+					hour += 1;
+				}
+				else {
+					$("#oclock_time").addClass("active");
+
+				}
+
+				// Convert hour to a 12-hour clock
+				hour = (hour % 12);
+	
+				switch(hour.toString()) {
+					case '0':
+						$("#twelve_time").addClass("active");
+						break;
+					case '1':
+						$("#one_time").addClass("active");
+						break;
+					case '2':
+						$("#two_time").addClass("active");
+						break;
+					case '3':
+						$("#three_time").addClass("active");
+						break;
+					case '4':
+						$("#four_time").addClass("active");
+						break;
+					case '5':
+						$("#five_time").addClass("active");
+						break;
+					case '6':
+						$("#six_time").addClass("active");
+						break;
+					case '7':
+						$("#seven_time").addClass("active");
+						break;
+					case '8':
+						$("#eight_time").addClass("active");
+						break;
+					case '9':
+						$("#nine_time").addClass("active");
+						break;
+					case '10':
+						$("#ten_time").addClass("active");
+						break;
+					case '11':
+						$("#eleven_time").addClass("active");
+						break;
+				}
+			}
+
+			function clearAll() {
+				$("#clock span").removeClass("active");
+			}
+		</script>
+	</head>
+	<body>
+		<div id="main">
+			<div id="title">The Word Clock</div>
+			<div id="clock">
+				<span id="it_is">It Is</span>
+				<span id="half_modifier">Half</span>
+				<span id="ten_modifier">Ten</span>
+				<span id="quarter_modifier">Quarter</span>
+				<span id="twenty_modifier">Twenty</span>	
+				<span id="five_modifier">Five</span>
+				<span id="minutes_modifier">Minutes</span>
+				<span id="to_modifier">To</span>
+				<span id="past_modifier">Past</span>
+				<span id="one_time">One</span>
+				<span id="two_time">Two</span>
+				<span id="three_time">Three</span>
+				<span id="four_time">Four</span>
+				<span id="five_time">Five</span>
+				<span id="six_time">Six</span>
+				<span id="seven_time">Seven</span>
+				<span id="eight_time">Eight</span>
+				<span id="nine_time">Nine</span>
+				<span id="ten_time">Ten</span>
+				<span id="eleven_time">Eleven</span>
+				<span id="twelve_time">Twelve</span>
+				<span id="oclock_time">O'Clock</span>
+			</div>
+		</div>
+	</body>
+</html>
