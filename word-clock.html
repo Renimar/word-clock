@@ -40,6 +40,7 @@ either expressed or implied, of the FreeBSD Project.
 				margin: 20px auto;
 				text-align: justify;
 				border: 1px solid #cdcdcd;
+				padding-top: 20px;
 			}
 			#title {
 				font-size: 3em;
@@ -93,12 +94,22 @@ either expressed or implied, of the FreeBSD Project.
 				else if ((minute >= 15) && (minute <= 19)){
 					$("#quarter_modifier").addClass("active");
 				}
-				else if ((minute >= 20) && (minute <= 29)){
+				else if ((minute >= 20) && (minute <= 24)){
 					$("#twenty_modifier").addClass("active");
 					$("#minutes_modifier").addClass("active");
 				}
-				else if ((minute >= 30) && (minute <= 39)){
+				else if ((minute >= 25) && (minute <= 29)){
+					$("#twenty_modifier").addClass("active");
+					$("#five_modifier").addClass("active");
+					$("#minutes_modifier").addClass("active");
+				}
+				else if ((minute >= 30) && (minute <= 34)){
 					$("#half_modifier").addClass("active");
+				}
+				else if ((minute >= 35) && (minute <= 39)){
+					$("#twenty_modifier").addClass("active");
+					$("#five_modifier").addClass("active");
+					$("#minutes_modifier").addClass("active");
 				}
 				else if ((minute >= 40) && (minute <= 44)){
 					$("#twenty_modifier").addClass("active");
@@ -117,10 +128,10 @@ either expressed or implied, of the FreeBSD Project.
 				}
 					
 				// Set the to/past/oclock modifier, and modifications for the hour
-				if ((minute >= 5) && (minute <= 39)) {
+				if ((minute >= 5) && (minute <= 34)) {
 					$("#past_modifier").addClass("active");
 				} 
-				else if ((minute >= 40) && (minute <= 59)) {
+				else if ((minute >= 35) && (minute <= 59)) {
 					$("#to_modifier").addClass("active");
 					hour += 1;
 				}
